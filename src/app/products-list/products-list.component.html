@@ -1,0 +1,3 @@
+<div *ngFor="let product of products" [class.active]="isSelectedProduct(product)" >
+  <app-product-row [product]="product" (selectedProduct)='getSelectedProduct($event)'></app-product-row>
+</div>
