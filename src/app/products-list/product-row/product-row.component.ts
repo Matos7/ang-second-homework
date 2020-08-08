@@ -7,20 +7,21 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./product-row.component.scss']
 })
 export class ProductRowComponent {
-
   @Input()
   public product: Product;
 
   @Output()
   public selectedProduct: EventEmitter<any> = new EventEmitter();
-  
+  @Output()
+  public removingProduct: EventEmitter<any> = new EventEmitter();
+
   constructor() {}
 
   public makeRed(): void {
     this.selectedProduct.emit(this.product);
   }
 
-  public removeItem(id: number):void {
-    
+  public removeItem(): void {
+    this.removingProduct.emit(this.product);
   }
 }

@@ -8,9 +8,10 @@
           <h5 class="card-title">{{ product.title }}</h5>
           <p class="card-text">{{ product.description }}</p>
           <p class="card-text">
-            <small class="text-muted"><a (click)="makeRed()">Make borders Red</a></small>
+            <small class="text-muted"><a (click)="makeRed()">Mark Up</a></small>
           </p>
-          <button (click)="removeItem(product.id)">Remove Item</button>
+          <ng-content></ng-content> 
+          <button (click)="removeItem()">Remove Item</button>
         </div>
       </div>
       <div class="col-md-2 d-flex justify-content-end ">
