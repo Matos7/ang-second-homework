@@ -1,30 +1,36 @@
-<form>
-  <input
-    class="form-control mr-sm-2 m-3 p-3"
-    type="search"
-    placeholder="Search"
-    aria-label="Search"
-    (ngModelChange)="searchProduct($event)"
-    [ngModelOptions]="{standalone:true}"
-    [ngModel]='searchText'
-  />
-  <div class="col-xs-12 m-3 p-3">
-    <span>Sort By -> </span>
-    <select name="" id="" class=""
-      (ngModelChange)="sortProducts($event)"
+<div *ngIf="products.length; else noProducts">
+  <form>
+    <input
+      class="form-control mr-sm-2 m-3 p-3"
+      type="search"
+      placeholder="Search"
+      aria-label="Search"
+      (ngModelChange)="searchProduct($event)"
       [ngModelOptions]="{standalone:true}"
-      [ngModel]='sortValue'
-    >
-      <option value="high-low">Price (High-Low)</option>
-      <option value="low-high">Price (Low-High)</option>
-      <option value="a-z">Titles (A-Z)</option>
-      <option value="z-a">Titles (Z-A)</option>
-    </select>
+      [ngModel]='searchText'
+    />
+    <div class="col-xs-12 m-3 p-3">
+      <span>Sort By -> </span>
+      <select name="" id="" class=""
+        (ngModelChange)="sortProducts($event)"
+        [ngModelOptions]="{standalone:true}"
+        [ngModel]='sortValue'
+      >
+        <option value="high-low">Price (High-Low)</option>
+        <option value="low-high">Price (Low-High)</option>
+        <option value="a-z">Titles (A-Z)</option>
+        <option value="z-a">Titles (Z-A)</option>
+      </select>
+    </div>
+  </form>
+  
+  <div *ngFor="let product of products" [class.active]="isSelectedProduct(product)" >
+    <app-product-row [product]="product" (selectedProduct)='getSelectedProduct($event)' (removingProduct)='removeProduct($event)'>
+      <small>If you remove the item, you can't see it anymore.</small>
+    </app-product-row>
   </div>
-</form>
-
-<div *ngFor="let product of products" [class.active]="isSelectedProduct(product)" >
-  <app-product-row [product]="product" (selectedProduct)='getSelectedProduct($event)' (removingProduct)='removeProduct($event)'>
-    <small>If you remove the item, you can't see it anymore.</small>
-  </app-product-row>
 </div>
+
+<ng-template #noProducts>
+  Products doesn't exist
+</ng-template>
