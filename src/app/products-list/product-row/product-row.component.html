@@ -11,8 +11,8 @@
             <small class="text-muted"><a (click)="makeRed()">Mark Up</a></small>
           </p>
           <ng-content></ng-content> 
-          <button class="mr-5" (click)="removeItem()">Remove Item</button>
-          <button (click)="editItem()">Edit Item</button>
+          <button class="mr-5 btn btn-danger" (click)="removeItem()">Remove Item</button>
+          <button class="btn btn-success" (click)="editItem()">Edit Item</button>
         </div>
       </div>
       <div class="col-md-2 d-flex justify-content-end ">
