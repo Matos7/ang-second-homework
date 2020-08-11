@@ -1,4 +1,4 @@
-<div *ngIf="products.length; else noProducts">
+<div>
   <form>
     <input
       class="form-control mr-sm-2 m-3 p-3"
@@ -6,15 +6,18 @@
       placeholder="Search"
       aria-label="Search"
       (ngModelChange)="searchProduct($event)"
-      [ngModelOptions]="{standalone:true}"
-      [ngModel]='searchText'
+      [ngModelOptions]="{ standalone: true }"
+      [ngModel]="searchText"
     />
     <div class="col-xs-12 m-3 p-3">
       <span>Sort By -> </span>
-      <select name="" id="" class=""
+      <select
+        name=""
+        id=""
+        class=""
         (ngModelChange)="sortProducts($event)"
-        [ngModelOptions]="{standalone:true}"
-        [ngModel]='sortValue'
+        [ngModelOptions]="{ standalone: true }"
+        [ngModel]="sortValue"
       >
         <option value="high-low">Price (High-Low)</option>
         <option value="low-high">Price (Low-High)</option>
@@ -23,14 +26,102 @@
       </select>
     </div>
   </form>
-  
-  <div *ngFor="let product of products" [class.active]="isSelectedProduct(product)" >
-    <app-product-row [product]="product" (selectedProduct)='getSelectedProduct($event)' (removingProduct)='removeProduct($event)'>
-      <small>If you remove the item, you can't see it anymore.</small>
-    </app-product-row>
+</div>
+
+<div class="d-flex justify-content-between">
+  <div *ngIf="isLoading === false; else showLoading">
+    <h3 class="text-center" *ngIf="products.length === 0">No Results</h3>
+    <div
+      *ngFor="let product of products"
+      appBorderedBox
+      [class.active]="isSelectedProduct(product)"
+    >
+      <app-product-row
+        [product]="product"
+        (selectedProduct)="getSelectedProduct($event)"
+        (removingProduct)="removeProduct($event)"
+        (editingProduct)="getEditableProduct($event)"
+      >
+        <small>If you remove the item, you can't see it anymore.</small>
+      </app-product-row>
+    </div>
+  </div>
+
+  <div *ngIf="!isEmptyObject(editingProduct)" id="update-info">
+    <button class="btn btn-primary" (click)="goAddItem()">Go to Add Item</button>
+    <div class="card" style="width: 40rem;">
+      <div class="card-header">Update the item {{ editingProduct.title }}</div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <label for="title">Title:</label>
+          <input type="text" id="title" [(ngModel)]="editTitle" />
+        </li>
+        <li class="list-group-item">
+          <label for="description">Description:</label>
+          <input type="text" id="description" [(ngModel)]="editDesc" />
+        </li>
+        <li class="list-group-item">
+          <label for="price">Price:</label>
+          <input
+            appBlockCopyPaste
+            type="number"
+            id="price"
+            [(ngModel)]="editPrice"
+          />
+        </li>
+        <li class="list-group-item">
+          <label for="imgUrl">Image Url:</label>
+          <input type="text" id="imgUrl" [(ngModel)]="editImgUrl" />
+        </li>
+      </ul>
+
+      <div *ngIf="editingValidationErrors">
+        <div class="col-xs-12 alert-danger">Please fill all fields</div>
+      </div>
+      <button class="btn btn-success" (click)="editItem(editingProduct.id)">
+        Save
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isEmptyObject(editingProduct)" id="update-info">
+    <div class="card" style="width: 40rem;">
+      <div class="card-header">Add new Item</div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <label for="title">Title:</label>
+          <input type="text" id="title" [(ngModel)]="addTitle" />
+        </li>
+        <li class="list-group-item">
+          <label for="description">Description:</label>
+          <input type="text" id="description" [(ngModel)]="addDesc" />
+        </li>
+        <li class="list-group-item">
+          <label for="price">Price:</label>
+          <input
+            appBlockCopyPaste
+            type="number"
+            id="price"
+            [(ngModel)]="addPrice"
+          />
+        </li>
+        <li class="list-group-item">
+          <label for="imgUrl">Image Url:</label>
+          <input type="text" id="imgUrl" [(ngModel)]="addImgUrl" />
+        </li>
+      </ul>
+
+      <div *ngIf="addingValidationErrors">
+        <div class="col-xs-12 alert-danger">Please fill all fields</div>
+      </div>
+
+      <button class="btn btn-success" (click)="addItem()">
+        Add item
+      </button>
+    </div>
   </div>
 </div>
 
-<ng-template #noProducts>
-  Products doesn't exist
+<ng-template #showLoading>
+  <app-loader></app-loader>
 </ng-template>

@@ -14,6 +14,8 @@ export class ProductRowComponent {
   public selectedProduct: EventEmitter<any> = new EventEmitter();
   @Output()
   public removingProduct: EventEmitter<any> = new EventEmitter();
+  @Output()
+  public editingProduct: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 
@@ -23,5 +25,9 @@ export class ProductRowComponent {
 
   public removeItem(): void {
     this.removingProduct.emit(this.product);
+  }
+
+  public editItem(): void {
+    this.editingProduct.emit(this.product);
   }
 }
