@@ -181,19 +181,23 @@ export class ProductsListComponent {
 
     if (isValid) {
       this.editingValidationErrors = false;
-      this.searchText = '';
       this.isLoading = true;
 
       setTimeout(() => {
         const index = this.products.findIndex(item => item.id === id);
         const product = this.products[index];
+        const chachedProduct = this.cachedProducts[index];
 
         product.title = this.editTitle;
         product.price = this.editPrice;
         product.description = this.editDesc;
         product.imageUrl = this.editImgUrl;
 
-        this.cachedProducts = this.products;
+        chachedProduct.title = this.editTitle;
+        chachedProduct.price = this.editPrice;
+        chachedProduct.description = this.editDesc;
+        chachedProduct.imageUrl = this.editImgUrl;
+
         this.isLoading = false;
       }, 200);
     } else {
