@@ -33,6 +33,8 @@ export class ProductsListComponent {
   public editingValidationErrors: boolean = false;
   public addingValidationErrors: boolean = false;
 
+  public error: string;
+
   constructor(public dataService: DataService) {}
 
   ngOnInit(): void {
@@ -43,12 +45,14 @@ export class ProductsListComponent {
     this.dataService.getProductsFromDB().subscribe(
       res => {
         this.cachedProducts = this.products = res.data;
-        this.isLoading = false;
       },
       err => {
-        console.log(err);
+        this.error = 'Make sure the database is connected successfully.';
+        throw err;
       }
     );
+    
+    this.isLoading = false;
   }
 
   public isEmptyObject(obj: Product | {}): boolean {
