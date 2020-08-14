@@ -1,3 +1,4 @@
+import { DataService } from './../core/services/data.service';
 import { BorderedBoxDirective } from './directives/bordered-box.directive';
 import { LoaderComponent } from './components/loader/loader.component';
 import { NgModule } from '@angular/core';
@@ -18,6 +19,9 @@ import { BlockCopyPasteDirective } from './directives/block-copy-paste.directive
     LoaderComponent,
     BorderedBoxDirective,
     BlockCopyPasteDirective
+  ],
+  providers:[
+    DataService
   ]
 })
 export class SharedModule { }
