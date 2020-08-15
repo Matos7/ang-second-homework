@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductRowComponent } from './products-list/product-row/product-row.component';
+import { ProvidersModule } from './core/providers.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,13 @@ import { ProductRowComponent } from './products-list/product-row/product-row.com
     ProductsListComponent,
     ProductRowComponent
   ],
-  imports: [BrowserModule, FormsModule, SharedModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    SharedModule,
+    ProvidersModule,
+    HttpClientModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,12 @@
 import { DataService } from './../core/services/data.service';
 import { Product } from './../core/models/product';
 import { Component } from '@angular/core';
+import {
+  FormGroup,
+  FormBuilder,
+  FormControl,
+  Validators
+} from '@angular/forms';
 
 @Component({
   selector: 'app-products-list',
@@ -14,16 +20,6 @@ export class ProductsListComponent {
   public searchText: string;
   public sortValue: string;
 
-  public editTitle: string;
-  public editDesc: string;
-  public editPrice: number;
-  public editImgUrl: string;
-
-  public addTitle: string;
-  public addDesc: string;
-  public addPrice: number;
-  public addImgUrl: string;
-
   public selectedProduct: Product;
 
   public editingProduct: Product | {};
@@ -33,22 +29,46 @@ export class ProductsListComponent {
   public editingValidationErrors: boolean = false;
   public addingValidationErrors: boolean = false;
 
-  constructor(public dataService: DataService) {}
+  public error: string;
+
+  public editItemForm: FormGroup;
+  public addItemForm: FormGroup;
+
+  constructor(public dataService: DataService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     setTimeout(this.getProducts.bind(this), 200);
+    this.createValidationForAdding();
+  }
+
+  public createValidationForAdding(): void {
+    this.addItemForm = this.fb.group({
+      addTitle: new FormControl('', [Validators.required]),
+      addDesc: new FormControl('', [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(150)
+      ]),
+      addPrice: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$')
+      ]),
+      addImgUrl: new FormControl('', [Validators.required])
+    });
   }
 
   public getProducts(): void {
     this.dataService.getProductsFromDB().subscribe(
       res => {
         this.cachedProducts = this.products = res.data;
-        this.isLoading = false;
       },
       err => {
-        console.log(err);
+        this.error = 'Make sure the database is connected successfully.';
+        throw err;
       }
     );
+
+    this.isLoading = false;
   }
 
   public isEmptyObject(obj: Product | {}): boolean {
@@ -63,10 +83,21 @@ export class ProductsListComponent {
   }
 
   public getEditableProduct(product: Product): void {
-    this.editTitle = product.title;
-    this.editPrice = product.price;
-    this.editDesc = product.description;
-    this.editImgUrl = product.imageUrl;
+    this.editItemForm = this.fb.group({
+      editTitle: new FormControl(product.title, [Validators.required]),
+      editDesc: new FormControl(product.description, [
+        Validators.required,
+        ,
+        Validators.minLength(10),
+        Validators.maxLength(150)
+      ]),
+      editPrice: new FormControl(product.price, [
+        Validators.required,
+        Validators.pattern('^[0-9]*$')
+      ]),
+      editImgUrl: new FormControl(product.imageUrl, [Validators.required])
+    });
+
     this.editingProduct = product;
   }
 
@@ -144,30 +175,27 @@ export class ProductsListComponent {
   }
 
   public editItem(id: number): void {
-    const isValid =
-      this.editTitle &&
-      this.editDesc &&
-      Number.isInteger(this.editPrice) &&
-      this.editImgUrl;
+    this.editingValidationErrors = false;
+    this.isLoading = true;
 
-    if (isValid) {
-      this.editingValidationErrors = false;
-      this.isLoading = true;
+    const formGroup = this.editItemForm.controls;
 
-      setTimeout(() => {
-        const index = this.products.findIndex(item => item.id === id);
-        const product = this.products[index];
+    let title: string = formGroup.editTitle.value;
+    let description: string = formGroup.editDesc.value;
+    let price: number = formGroup.editPrice.value;
+    let imgUrl: string = formGroup.editImgUrl.value;
 
-        product.title = this.editTitle;
-        product.price = this.editPrice;
-        product.description = this.editDesc;
-        product.imageUrl = this.editImgUrl;
+    setTimeout(() => {
+      const index = this.products.findIndex(item => item.id === id);
+      const product = this.products[index];
 
-        this.isLoading = false;
-      }, 200);
-    } else {
-      this.editingValidationErrors = true;
-    }
+      product.title = title;
+      product.description = description;
+      product.price = price;
+      product.imageUrl = imgUrl;
+
+      this.isLoading = false;
+    }, 200);
   }
 
   public goAddItem(): void {
@@ -175,38 +203,34 @@ export class ProductsListComponent {
   }
 
   public addItem(): void {
-    const isValid =
-      this.addTitle &&
-      this.addDesc &&
-      Number.isInteger(this.addPrice) &&
-      this.addImgUrl;
+    this.addingValidationErrors = false;
+    this.isLoading = true;
 
-    if (isValid) {
-      this.addingValidationErrors = false;
-      this.isLoading = true;
+    const formGroup = this.addItemForm.controls;
 
-      setTimeout(() => {
-        const newId = this.products.length + 1;
+    let title: string = formGroup.addTitle.value;
+    let description: string = formGroup.addDesc.value;
+    let price: number = formGroup.addPrice.value;
+    let imgUrl: string = formGroup.addImgUrl.value;
 
-        const newProduct: Product = {
-          id: newId,
-          title: this.addTitle,
-          description: this.addDesc,
-          price: this.addPrice,
-          imageUrl: this.addImgUrl
-        };
+    setTimeout(() => {
+      const newId = this.products.length + 1;
 
-        this.products.push(newProduct);
-        this.cachedProducts.push(newProduct);
+      const newProduct: Product = {
+        id: newId,
+        title: title,
+        description: description,
+        price: price,
+        imageUrl: imgUrl
+      };
 
-        this.addTitle = '';
-        this.addDesc = '';
-        this.addPrice = null;
-        this.addImgUrl = '';
-        this.isLoading = false;
-      }, 200);
-    } else {
-      this.addingValidationErrors = true;
-    }
+      this.products.push(newProduct);
+
+      title = '';
+      description = '';
+      price = null;
+      imgUrl = '';
+      this.isLoading = false;
+    }, 200);
   }
 }
