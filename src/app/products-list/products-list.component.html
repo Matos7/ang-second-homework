@@ -50,67 +50,183 @@
     </div>
   </div>
 
-  <div *ngIf="!isEmptyObject(editingProduct)" id="update-info">
-    <button class="btn btn-primary" (click)="goAddItem()">Go to Add Item</button>
+  <div
+    [formGroup]="editItemForm"
+    *ngIf="!isEmptyObject(editingProduct)"
+    id="update-info"
+  >
+    <button class="btn btn-primary" (click)="goAddItem()">
+      Go to Add Item
+    </button>
     <div class="card" style="width: 40rem;">
       <div class="card-header">Update the item {{ editingProduct.title }}</div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
           <label for="title">Title:</label>
-          <input type="text" id="title" [(ngModel)]="editTitle" />
+          <input type="text" id="title" formControlName="editTitle" />
+          <p
+            class="text-danger"
+            [hidden]="
+              editItemForm.controls['editTitle'].untouched ||
+              !editItemForm.controls['editTitle'].errors?.required
+            "
+          >
+            This field is required
+          </p>
         </li>
         <li class="list-group-item">
           <label for="description">Description:</label>
-          <input type="text" id="description" [(ngModel)]="editDesc" />
+          <input type="text" id="description" formControlName="editDesc" />
+          <p
+            class="text-danger"
+            [hidden]="
+              editItemForm.controls['editDesc'].untouched ||
+              !editItemForm.controls['editDesc'].errors?.required
+            "
+          >
+            This field is required
+          </p>
+          <p
+            class="text-danger"
+            [hidden]="!editItemForm.get('editDesc').hasError('maxlength')"
+          >
+            The field can contains max. 100 symbols!!!
+          </p>
+          <p
+            class="text-danger"
+            [hidden]="!editItemForm.get('editDesc').hasError('minlength')"
+          >
+            The field must contains min. 10 symbols!!!
+          </p>
         </li>
         <li class="list-group-item">
           <label for="price">Price:</label>
           <input
             appBlockCopyPaste
+            formControlName="editPrice"
             type="number"
             id="price"
-            [(ngModel)]="editPrice"
           />
+          <p
+            class="text-danger"
+            [hidden]="
+              editItemForm.controls['editPrice'].untouched ||
+              !editItemForm.controls['editPrice'].errors?.required
+            "
+          >
+            This field is required
+          </p>
+          <p class="text-danger" [hidden]="!editItemForm.get('editPrice').hasError('pattern')">
+            This field is invalid
+          </p>
         </li>
         <li class="list-group-item">
           <label for="imgUrl">Image Url:</label>
-          <input type="text" id="imgUrl" [(ngModel)]="editImgUrl" />
+          <input type="text" id="imgUrl" formControlName="editImgUrl" />
+          <p
+            class="text-danger"
+            [hidden]="
+              editItemForm.controls['editImgUrl'].untouched ||
+              !editItemForm.controls['editImgUrl'].errors?.required
+            "
+          >
+            This field is required
+          </p>
         </li>
       </ul>
 
       <div *ngIf="editingValidationErrors">
         <div class="col-xs-12 alert-danger">Please fill all fields</div>
       </div>
-      <button class="btn btn-success" (click)="editItem(editingProduct.id)">
+      <button
+        [disabled]="editItemForm.invalid"
+        class="btn btn-success"
+        (click)="editItem(editingProduct.id)"
+      >
         Save
       </button>
     </div>
   </div>
 
-  <div *ngIf="isEmptyObject(editingProduct)" id="update-info">
+  <div
+    [formGroup]="addItemForm"
+    *ngIf="isEmptyObject(editingProduct)"
+    id="update-info"
+  >
     <div class="card" style="width: 40rem;">
       <div class="card-header">Add new Item</div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
           <label for="title">Title:</label>
-          <input type="text" id="title" [(ngModel)]="addTitle" />
+          <input type="text" id="title" formControlName="addTitle" />
+          <p
+            class="text-danger"
+            [hidden]="
+              addItemForm.controls['addTitle'].untouched ||
+              !addItemForm.controls['addTitle'].errors?.required
+            "
+          >
+            This field is required
+          </p>
         </li>
         <li class="list-group-item">
           <label for="description">Description:</label>
-          <input type="text" id="description" [(ngModel)]="addDesc" />
+          <input type="text" id="description" formControlName="addDesc" />
+          <p
+            class="text-danger"
+            [hidden]="
+              addItemForm.controls['addDesc'].untouched ||
+              !addItemForm.controls['addDesc'].errors?.required
+            "
+          >
+            This field is required
+          </p>
+          <p
+            class="text-danger"
+            [hidden]="!addItemForm.get('addDesc').hasError('maxlength')"
+          >
+            The field can contains max. 100 symbols!!!
+          </p>
+          <p
+            class="text-danger"
+            [hidden]="!addItemForm.get('addDesc').hasError('minlength')"
+          >
+            The field must contains min. 10 symbols!!!
+          </p>
         </li>
         <li class="list-group-item">
           <label for="price">Price:</label>
           <input
             appBlockCopyPaste
+            formControlName="addPrice"
             type="number"
             id="price"
-            [(ngModel)]="addPrice"
           />
+          <p
+            class="text-danger"
+            [hidden]="
+              addItemForm.controls['addPrice'].untouched ||
+              !addItemForm.controls['addPrice'].errors?.required
+            "
+          >
+            This field is required
+          </p>
+          <p class="text-danger" [hidden]="!addItemForm.get('addPrice').hasError('pattern')">
+            This field is invalid
+          </p>
         </li>
         <li class="list-group-item">
           <label for="imgUrl">Image Url:</label>
-          <input type="text" id="imgUrl" [(ngModel)]="addImgUrl" />
+          <input type="text" id="imgUrl" formControlName="addImgUrl" />
+          <p
+            class="text-danger"
+            [hidden]="
+              addItemForm.controls['addImgUrl'].untouched ||
+              !addItemForm.controls['addImgUrl'].errors?.required
+            "
+          >
+            This field is required
+          </p>
         </li>
       </ul>
 
@@ -118,7 +234,11 @@
         <div class="col-xs-12 alert-danger">Please fill all fields</div>
       </div>
 
-      <button class="btn btn-primary" (click)="addItem()">
+      <button
+        [disabled]="addItemForm.invalid"
+        class="btn btn-primary"
+        (click)="addItem()"
+      >
         Add item
       </button>
     </div>
