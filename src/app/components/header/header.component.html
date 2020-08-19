@@ -1,0 +1,11 @@
+<ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link" [class.disabled]="isLinkDisabled()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" routerLink="/home">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" [class.disabled]="isLinkDisabled()" routerLinkActive="active" routerLink="/contact">Contact</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" [class.disabled]="isLinkDisabled()" routerLinkActive="active" routerLink="/about">About us</a>
+  </li>
+</ul>

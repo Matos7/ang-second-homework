@@ -1,0 +1,78 @@
+<div class="p-30" [formGroup]="loginForm">
+  <div class="bordered col-xs-6">
+    <a routerLink="/register">Go to Registration</a>
+  </div>
+  <div class="col-xs-12">
+    <div class="form-group">
+      <label for="login">Login</label>
+      <input
+        type="text"
+        formControlName="login"
+        class="form-control"
+        id="login"
+        placeholder="Please type here your email"
+      />
+      <p
+        class="text-danger"
+        [hidden]="
+          loginForm.controls['login'].untouched ||
+          !loginForm.controls['login'].errors?.required
+        "
+      >
+        This field is required
+      </p>
+
+      <p
+        class="text-danger"
+        [hidden]="!loginForm.get('login').hasError('pattern')"
+      >
+        This field is invalid
+      </p>
+    </div>
+  </div>
+  <div class="col-xs-12 form-group">
+    <label for="password">Password</label>
+    <input
+      type="password"
+      formControlName="password"
+      class="form-control"
+      id="password"
+      placeholder="Please type here your password"
+    />
+    <p
+      class="text-danger"
+      [hidden]="
+        loginForm.controls['password'].untouched ||
+        !loginForm.controls['password'].errors?.required
+      "
+    >
+      This field is required
+    </p>
+    <p
+      class="text-danger"
+      [hidden]="!loginForm.get('password').hasError('minlength')"
+    >
+      The min length of field should be more than 7
+    </p>
+    <p
+      class="text-danger"
+      [hidden]="!loginForm.get('password').hasError('maxlength')"
+    >
+      The max length of field should be less than 16
+    </p>
+  </div>
+  <div *ngIf="wrongEmail">
+    <p class="text-danger">
+      You have written wrong email
+    </p>
+  </div>
+  <div *ngIf="wrongPassword">
+    <p class="text-danger">
+      You have written wrong password
+    </p>
+  </div>
+  <div class="col-xs-12">
+    <a routerLink="/forget-password">Forget Password ?</a>
+  </div>
+  <button type="button" class="btn btn-primary" (click)="login()" [disabled]="loginForm.invalid">Log In</button>
+</div>
