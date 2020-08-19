@@ -1,5 +1,5 @@
-import { DataService } from './../core/services/data.service';
-import { Product } from './../core/models/product';
+import { DataService } from '../../core/services/data.service';
+import { Product } from '../../core/models/product';
 import { Component } from '@angular/core';
 import {
   FormGroup,

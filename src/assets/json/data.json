@@ -35,5 +35,16 @@
       "price": 240,
       "imageUrl": "https://logoeps.com/wp-content/uploads/2012/10/hummel-vector-logo.png"
     }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "test name",
+      "surname": "test surname",
+      "email": "test@mail.ru",
+      "password": "test1234",
+      "city": "Gyumri",
+      "phone": 94247885
+    }
   ]
 }

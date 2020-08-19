@@ -1,4 +1,4 @@
-import { Product } from './../../core/models/product';
+import { Product } from '../../../core/models/product';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -16,6 +16,8 @@ export class ProductRowComponent {
   public removingProduct: EventEmitter<any> = new EventEmitter();
   @Output()
   public editingProduct: EventEmitter<any> = new EventEmitter();
+
+  public namesArray:string[] = ['John',"Alex","David","Anna"];
 
   constructor() {}
 
