@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
     );
   }
 
-  ConfirmedValidator(
+  public ConfirmedValidator(
     controlName: string,
     matchingControlName: string
   ): Function {
@@ -112,16 +112,16 @@ export class RegisterComponent implements OnInit {
     } else {
       if (findUserWithEmail) {
         this.existEmail = true;
-        setTimeout(()=>{
+        setTimeout(() => {
           this.existEmail = false;
-        },5000)
+        }, 5000);
       }
-      if (findUserWithPhone){
+      if (findUserWithPhone) {
         this.existPhone = true;
-        setTimeout(()=>{
+        setTimeout(() => {
           this.existPhone = false;
-        },5000)
-      } 
+        }, 5000);
+      }
     }
   }
 
