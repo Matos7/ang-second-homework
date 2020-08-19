@@ -15,7 +15,7 @@ import {
 })
 export class ProductsListComponent {
   public products: Product[] = [];
-  public cachedProducts: Product[] = [];
+  // public this.dataService.products: Product[] = [];
 
   public searchText: string;
   public sortValue: string;
@@ -58,16 +58,7 @@ export class ProductsListComponent {
   }
 
   public getProducts(): void {
-    this.dataService.getProductsFromDB().subscribe(
-      res => {
-        this.cachedProducts = this.products = res.data;
-      },
-      err => {
-        this.error = 'Make sure the database is connected successfully.';
-        throw err;
-      }
-    );
-
+    this.products = this.dataService.products;
     this.isLoading = false;
   }
 
@@ -105,8 +96,8 @@ export class ProductsListComponent {
     this.searchText = '';
     this.sortValue = '';
     const removingId = product.id;
-    this.products = this.cachedProducts.filter(item => removingId !== item.id);
-    this.cachedProducts = this.products;
+    this.products = this.dataService.products.filter(item => removingId !== item.id);
+    this.dataService.products = this.products;
     if (this.editingProduct === product) {
       this.editingProduct = {};
     }
@@ -117,7 +108,7 @@ export class ProductsListComponent {
     setTimeout(() => {
       switch (selectedValue) {
         case 'a-z':
-          this.products = this.cachedProducts.sort((a: Product, b: Product) => {
+          this.products = this.dataService.products.sort((a: Product, b: Product) => {
             let aItem: string = a.title.toLowerCase();
             let bItem: string = b.title.toLowerCase();
 
@@ -125,7 +116,7 @@ export class ProductsListComponent {
           });
           break;
         case 'z-a':
-          this.products = this.cachedProducts.sort((a: Product, b: Product) => {
+          this.products = this.dataService.products.sort((a: Product, b: Product) => {
             let aItem: string = a.title.toLowerCase();
             let bItem: string = b.title.toLowerCase();
 
@@ -133,12 +124,12 @@ export class ProductsListComponent {
           });
           break;
         case 'high-low':
-          this.products = this.cachedProducts.sort(
+          this.products = this.dataService.products.sort(
             (a: Product, b: Product) => b.price - a.price
           );
           break;
         case 'low-high':
-          this.products = this.cachedProducts.sort(
+          this.products = this.dataService.products.sort(
             (a: Product, b: Product) => a.price - b.price
           );
           break;
@@ -166,7 +157,7 @@ export class ProductsListComponent {
     const modifiedVal: string = searchValue.trim().toLocaleLowerCase();
 
     setTimeout(() => {
-      this.products = this.cachedProducts.filter(product =>
+      this.products = this.dataService.products.filter(product =>
         product.title.toLocaleLowerCase().includes(modifiedVal)
       );
 
