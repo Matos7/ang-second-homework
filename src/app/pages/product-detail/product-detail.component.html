@@ -1,0 +1,17 @@
+<div *ngIf="product;" class="card mb-3 center" style="max-width: 640px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img [src]="product?.imageUrl" class="card-img" [alt]="product?.title" />
+    </div>
+    <div class="col-md-6">
+      <div class="card-body">
+        <h5 class="card-title">{{ product?.title | uppercase }}</h5>
+        <p class="card-text">{{ product?.description }}</p>
+        <ng-content></ng-content>
+      </div>
+    </div>
+    <div class="col-md-2 d-flex justify-content-end ">
+      {{ product?.price | currency: "USD" }}
+    </div>
+  </div>
+</div>

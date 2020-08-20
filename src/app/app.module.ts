@@ -18,10 +18,12 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
+import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
+  { path: 'product-detail/:id', component: ProductDetailComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forget-password', component: ForgetPasswordComponent },
@@ -44,6 +46,7 @@ const appRoutes: Routes = [
     RegisterComponent,
     LoginComponent,
     ForgetPasswordComponent,
+    ProductDetailComponent,
   ],
   imports: [
     BrowserModule,
