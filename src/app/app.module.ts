@@ -7,8 +7,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './components/root/app.component';
 import { HeaderComponent } from './components/header/header.component';
-import { ProductsListComponent } from './components/products-list/products-list.component';
-import { ProductRowComponent } from './components/products-list/product-row/product-row.component';
+import { ProductsListComponent } from './pages/products-list/products-list.component';
+import { ProductRowComponent } from './pages/products-list/product-row/product-row.component';
 import { CoreModule } from './core/core.module';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './pages/home/home.component';
