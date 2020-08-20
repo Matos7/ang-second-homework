@@ -9,7 +9,7 @@ import { AppComponent } from './components/root/app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ProductsListComponent } from './components/products-list/products-list.component';
 import { ProductRowComponent } from './components/products-list/product-row/product-row.component';
-import { ProvidersModule } from './core/providers.module';
+import { CoreModule } from './core/core.module';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
@@ -49,7 +49,7 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     SharedModule,
-    ProvidersModule,
+    CoreModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
