@@ -53,6 +53,7 @@ export class ProductsListComponent {
         Validators.required,
         Validators.pattern('^[0-9]*$')
       ]),
+      addCategory: new FormControl('', [Validators.required]),
       addImgUrl: new FormControl('', [Validators.required])
     });
   }
@@ -208,6 +209,7 @@ export class ProductsListComponent {
 
     let title: string = formGroup.addTitle.value;
     let description: string = formGroup.addDesc.value;
+    let category: string = formGroup.addCategory.value;
     let price: number = formGroup.addPrice.value;
     let imgUrl: string = formGroup.addImgUrl.value;
 
@@ -218,6 +220,7 @@ export class ProductsListComponent {
         id: newId,
         title: title,
         description: description,
+        category: category,
         price: price,
         imageUrl: imgUrl
       };

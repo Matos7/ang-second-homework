@@ -28,11 +28,22 @@
   </form>
 </div>
 
+<div>
+  <div class="col-xs-12 m-3 p-3">
+    <span>Search By Category -> </span>
+    <select name="" id="" class="">
+      <option value="shirt">Shirt</option>
+      <option value="low-high">Short</option>
+      <option value="shoes">Shoes</option>
+    </select>
+  </div>
+</div>
+
 <div class="d-flex justify-content-between">
   <div *ngIf="isLoading === false; else showLoading">
     <div class="text-center" *ngIf="products.length === 0">
       <h3>No Results</h3>
-      <div *ngIf="error">{{error}}</div>
+      <div *ngIf="error">{{ error }}</div>
     </div>
     <div
       *ngFor="let product of products"
@@ -116,7 +127,10 @@
           >
             This field is required
           </p>
-          <p class="text-danger" [hidden]="!editItemForm.get('editPrice').hasError('pattern')">
+          <p
+            class="text-danger"
+            [hidden]="!editItemForm.get('editPrice').hasError('pattern')"
+          >
             This field is invalid
           </p>
         </li>
@@ -195,6 +209,19 @@
           </p>
         </li>
         <li class="list-group-item">
+          <label for="category">Category:</label>
+          <input type="text" id="category" formControlName="addCategory" />
+          <p
+            class="text-danger"
+            [hidden]="
+              addItemForm.controls['addCategory'].untouched ||
+              !addItemForm.controls['addCategory'].errors?.required
+            "
+          >
+            This field is required
+          </p>
+        </li>
+        <li class="list-group-item">
           <label for="price">Price:</label>
           <input
             appBlockCopyPaste
@@ -211,7 +238,10 @@
           >
             This field is required
           </p>
-          <p class="text-danger" [hidden]="!addItemForm.get('addPrice').hasError('pattern')">
+          <p
+            class="text-danger"
+            [hidden]="!addItemForm.get('addPrice').hasError('pattern')"
+          >
             This field is invalid
           </p>
         </li>
