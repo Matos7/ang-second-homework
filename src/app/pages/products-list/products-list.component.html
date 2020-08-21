@@ -28,13 +28,20 @@
   </form>
 </div>
 
-<div>
+<div [formGroup]="categoryForm">
   <div class="col-xs-12 m-3 p-3">
     <span>Search By Category -> </span>
-    <select name="" id="" class="">
-      <option value="shirt">Shirt</option>
-      <option value="low-high">Short</option>
-      <option value="shoes">Shoes</option>
+    <select
+      formControlName="findCategory"
+      (change)="changeCategory()"
+      name=""
+      id=""
+      class=""
+    >
+      <option value="" disabled>Choose the category</option>
+      <option value="Shirt">Shirt</option>
+      <option value="Short">Short</option>
+      <option value="Shoes">Shoes</option>
     </select>
   </div>
 </div>

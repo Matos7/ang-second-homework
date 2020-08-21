@@ -33,12 +33,25 @@ export class ProductsListComponent {
 
   public editItemForm: FormGroup;
   public addItemForm: FormGroup;
+  public categoryForm: FormGroup;
 
   constructor(public dataService: DataService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     setTimeout(this.getProducts.bind(this), 200);
     this.createValidationForAdding();
+    this.categoryForm = new FormGroup({
+      findCategory: new FormControl()
+    });
+  }
+
+  public changeCategory(): void {
+    const formGroup = this.categoryForm.controls;
+    let selectedValue: string = formGroup.findCategory.value;
+
+    this.products = this.cachedProducts.filter(
+      item => item.category === selectedValue
+    );
   }
 
   public createValidationForAdding(): void {
