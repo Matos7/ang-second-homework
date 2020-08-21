@@ -86,15 +86,15 @@ export class RegisterComponent implements OnInit {
     let city: string = formGroup.city.value;
     let phone: number = formGroup.phone.value;
 
-    const findUserWithEmail: User = this.usersService.users.find(
+    const findUserWithEmail: User = this.users.find(
       item => item.email === email
     );
-    const findUserWithPhone: User = this.usersService.users.find(
+    const findUserWithPhone: User = this.users.find(
       item => item.phone === phone
     );
 
     if (findUserWithEmail === undefined && findUserWithPhone === undefined) {
-      const newId = this.usersService.users.length + 1;
+      const newId = this.users.length + 1;
 
       const newUser: User = {
         id: newId,
@@ -106,7 +106,7 @@ export class RegisterComponent implements OnInit {
         phone: phone
       };
 
-      this.usersService.users.push(newUser);
+      this.users.push(newUser);
 
       this._router.navigateByUrl('/login');
     } else {
@@ -129,6 +129,11 @@ export class RegisterComponent implements OnInit {
     this._subscription = this.signUp.valueChanges.subscribe(res => {
       // console.log('res', res);
     });
+    this.usersService.getUsersFromDB().subscribe((res)=>{
+      this.users = res.users;
+    },(err)=>{
+      console.log(err);
+    })
   }
 
   ngOnDestroy(): void {

@@ -44,6 +44,11 @@ export class LoginComponent implements OnInit {
     this._subscription = this.loginForm.valueChanges.subscribe(res => {
       // console.log('res', res);
     });
+    this.usersService.getUsersFromDB().subscribe((res)=>{
+      this.users = res.users;
+    },(err)=>{
+      console.log(err);
+    })
   }
 
   public login(): void {
@@ -54,7 +59,7 @@ export class LoginComponent implements OnInit {
     let login: string = formGroup.login.value;
     let password: string = formGroup.password.value;
 
-    const item: User = this.usersService.users.find(item => item.email === login);
+    const item: User = this.users.find(item => item.email === login);
 
     if (item === undefined) {
       this.wrongEmail = true;

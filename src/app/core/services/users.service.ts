@@ -4,18 +4,8 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class UsersService {
-  public users:User[];
-  
+export class UsersService {  
   constructor(public http: HttpClient) {
-    this.getUsersFromDB().subscribe(
-      res => {
-        this.users = res.users;
-      },
-      err => {
-        throw err;
-      }
-    );
   }
 
   public getUsersFromDB(): Observable<any> {
