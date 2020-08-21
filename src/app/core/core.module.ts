@@ -5,4 +5,4 @@ import { NgModule } from '@angular/core';
 @NgModule({
   providers: [DataService,UsersService]
 })
-export class ProvidersModule {}
+export class CoreModule {}

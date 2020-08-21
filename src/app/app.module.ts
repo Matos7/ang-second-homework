@@ -12,7 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './components/root/app.component';
 import { HeaderComponent } from './components/header/header.component';
-import { ProvidersModule } from './core/providers.module';
+import { CoreModule } from './core/core.module';
 import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
@@ -29,7 +29,7 @@ import { FooterComponent } from './components/footer/footer.component';
     BrowserModule,
     FormsModule,
     SharedModule,
-    ProvidersModule,
+    CoreModule,
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,

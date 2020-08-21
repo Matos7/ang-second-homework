@@ -15,7 +15,6 @@ import {
 })
 export class ProductsListComponent {
   public products: Product[] = [];
-  // public this.dataService.products: Product[] = [];
 
   public searchText: string;
   public sortValue: string;
