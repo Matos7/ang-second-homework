@@ -9,14 +9,6 @@ export class DataService {
   public products:Product[];
   
   constructor(public http: HttpClient) {
-    this.getproductsFromDB().subscribe(
-      res => {
-        this.products = res.data;
-      },
-      err => {
-        throw err;
-      }
-    );
   }
 
   public getproductsFromDB(): Observable<any> {

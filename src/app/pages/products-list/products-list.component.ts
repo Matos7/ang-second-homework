@@ -15,6 +15,7 @@ import {
 })
 export class ProductsListComponent {
   public products: Product[] = [];
+  public cachedProducts: Product[] = [];
 
   public searchText: string;
   public sortValue: string;
@@ -57,7 +58,14 @@ export class ProductsListComponent {
   }
 
   public getProducts(): void {
-    this.products = this.dataService.products;
+    this.dataService.getproductsFromDB().subscribe(
+      res => {
+        this.products = this.cachedProducts = res.data;
+      },
+      err => {
+        throw err;
+      }
+    );
     this.isLoading = false;
   }
 
@@ -95,8 +103,8 @@ export class ProductsListComponent {
     this.searchText = '';
     this.sortValue = '';
     const removingId = product.id;
-    this.products = this.dataService.products.filter(item => removingId !== item.id);
-    this.dataService.products = this.products;
+    this.products = this.cachedProducts.filter(item => removingId !== item.id);
+    this.cachedProducts = this.products;
     if (this.editingProduct === product) {
       this.editingProduct = {};
     }
@@ -107,7 +115,7 @@ export class ProductsListComponent {
     setTimeout(() => {
       switch (selectedValue) {
         case 'a-z':
-          this.products = this.dataService.products.sort((a: Product, b: Product) => {
+          this.products = this.cachedProducts.sort((a: Product, b: Product) => {
             let aItem: string = a.title.toLowerCase();
             let bItem: string = b.title.toLowerCase();
 
@@ -115,7 +123,7 @@ export class ProductsListComponent {
           });
           break;
         case 'z-a':
-          this.products = this.dataService.products.sort((a: Product, b: Product) => {
+          this.products = this.cachedProducts.sort((a: Product, b: Product) => {
             let aItem: string = a.title.toLowerCase();
             let bItem: string = b.title.toLowerCase();
 
@@ -123,12 +131,12 @@ export class ProductsListComponent {
           });
           break;
         case 'high-low':
-          this.products = this.dataService.products.sort(
+          this.products = this.cachedProducts.sort(
             (a: Product, b: Product) => b.price - a.price
           );
           break;
         case 'low-high':
-          this.products = this.dataService.products.sort(
+          this.products = this.cachedProducts.sort(
             (a: Product, b: Product) => a.price - b.price
           );
           break;
@@ -156,7 +164,7 @@ export class ProductsListComponent {
     const modifiedVal: string = searchValue.trim().toLocaleLowerCase();
 
     setTimeout(() => {
-      this.products = this.dataService.products.filter(product =>
+      this.products = this.cachedProducts.filter(product =>
         product.title.toLocaleLowerCase().includes(modifiedVal)
       );
 
