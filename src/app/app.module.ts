@@ -1,6 +1,7 @@
-import { RegisterComponent } from './pages/register/register.component';
-import { LoginComponent } from './pages/login/login.component';
-import { HomeComponent } from './pages/home/home.component';
+import { ForgetPasswordModule } from './pages/forget-password/forget-password.module';
+import { RegisterModule } from './pages/register/register.module';
+import { LoginModule } from './pages/login/login.module';
+import { HomeModule } from './pages/home/home.module';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { FormsModule } from '@angular/forms';
@@ -11,23 +12,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './components/root/app.component';
 import { HeaderComponent } from './components/header/header.component';
-import { ProductsListComponent } from './pages/products-list/products-list.component';
-import { ProductRowComponent } from './pages/products-list/product-row/product-row.component';
 import { ProvidersModule } from './core/providers.module';
 import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    LoginComponent,
-    RegisterComponent,
     HeaderComponent,
-    ProductsListComponent,
-    ProductRowComponent,
     FooterComponent,
   ],
   imports: [
+    HomeModule,
+    LoginModule,
+    RegisterModule,
+    ForgetPasswordModule,
     BrowserModule,
     FormsModule,
     SharedModule,
