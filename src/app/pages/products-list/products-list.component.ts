@@ -7,6 +7,7 @@ import {
   FormControl,
   Validators
 } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-list',
@@ -35,7 +36,7 @@ export class ProductsListComponent {
   public addItemForm: FormGroup;
   public categoryForm: FormGroup;
 
-  constructor(public dataService: DataService, private fb: FormBuilder) {}
+  constructor(public dataService: DataService, private fb: FormBuilder, public _router:Router) {}
 
   ngOnInit(): void {
     setTimeout(this.getProducts.bind(this), 200);
@@ -48,6 +49,8 @@ export class ProductsListComponent {
   public changeCategory(): void {
     const formGroup = this.categoryForm.controls;
     let selectedValue: string = formGroup.findCategory.value;
+
+    this._router.navigateByUrl(`/home?category=${selectedValue}`);
 
     this.products = this.cachedProducts.filter(
       item => item.category === selectedValue
