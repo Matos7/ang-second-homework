@@ -73,6 +73,8 @@ export class ProductsListComponent {
 
     this.rangeValue = selectedValue;
 
+    this._router.navigateByUrl(`/home?price=${selectedValue}`);
+
     this.products = this.cachedProducts
       .filter(item => item.price <= selectedValue)
       .sort((a: Product, b: Product) => b.price - a.price);
