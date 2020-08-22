@@ -33,7 +33,7 @@
     <span>Search By Category -> </span>
     <select
       formControlName="findCategory"
-      (change)="changeCategory()"
+      (change)="findByCategory()"
       name=""
       id=""
       class=""
@@ -43,6 +43,25 @@
       <option value="Short">Short</option>
       <option value="Shoes">Shoes</option>
     </select>
+  </div>
+</div>
+
+<div [formGroup]="priceForm" class="d-flex justify-content-start">
+  <div class="col-xs-4">Find Until Price</div>
+  <div class="slidecontainer col-xs-8 ml-5">
+    <input
+      type="range"
+      min="1"
+      formControlName="priceRange"
+      (change)="findUntilPrice()"
+      max="500"
+      value="350"
+      class="slider"
+      id="priceRange"
+    />
+    <div>
+      <small>Value of Range:</small><span>{{ rangeValue }} $</span>
+    </div>
   </div>
 </div>
 

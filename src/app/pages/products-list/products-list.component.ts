@@ -35,8 +35,15 @@ export class ProductsListComponent {
   public editItemForm: FormGroup;
   public addItemForm: FormGroup;
   public categoryForm: FormGroup;
+  public priceForm: FormGroup;
 
-  constructor(public dataService: DataService, private fb: FormBuilder, public _router:Router) {}
+  public rangeValue: number = 350;
+
+  constructor(
+    public dataService: DataService,
+    private fb: FormBuilder,
+    public _router: Router
+  ) {}
 
   ngOnInit(): void {
     setTimeout(this.getProducts.bind(this), 200);
@@ -44,9 +51,12 @@ export class ProductsListComponent {
     this.categoryForm = new FormGroup({
       findCategory: new FormControl()
     });
+    this.priceForm = new FormGroup({
+      priceRange: new FormControl()
+    });
   }
 
-  public changeCategory(): void {
+  public findByCategory(): void {
     const formGroup = this.categoryForm.controls;
     let selectedValue: string = formGroup.findCategory.value;
 
@@ -55,6 +65,17 @@ export class ProductsListComponent {
     this.products = this.cachedProducts.filter(
       item => item.category === selectedValue
     );
+  }
+
+  public findUntilPrice(): void {
+    const formGroup = this.priceForm.controls;
+    let selectedValue: number = formGroup.priceRange.value;
+
+    this.rangeValue = selectedValue;
+
+    this.products = this.cachedProducts
+      .filter(item => item.price <= selectedValue)
+      .sort((a: Product, b: Product) => b.price - a.price);
   }
 
   public createValidationForAdding(): void {
