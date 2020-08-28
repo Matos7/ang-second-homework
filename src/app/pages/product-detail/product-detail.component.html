@@ -1,4 +1,12 @@
 <div *ngIf="product;" class="card mb-3 center" style="max-width: 640px;">
+  <nav>
+    <ul>
+      <li><a routerLink="review">Review</a></li>
+      <li><a routerLink="stat">Statistic</a></li>
+    </ul>
+  </nav>
+  
+  <router-outlet></router-outlet>
   <div class="row no-gutters">
     <div class="col-md-4">
       <img [src]="product?.imageUrl" class="card-img" [alt]="product?.title" />
