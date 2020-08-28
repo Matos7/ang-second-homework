@@ -1,8 +1,8 @@
 import { Subscription } from 'rxjs';
-import { Product } from './../../core/models/product';
-import { DataService } from './../../core/services/data.service';
 import { Component, OnInit } from '@angular/core';
+import { Product } from './../../core/models/product';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DataService } from './../../core/services/data.service';
 
 @Component({
   selector: 'app-product-detail',

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { HomeRoutingModule } from './home-routing.module';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 
 import { ProductRowComponent } from './../products-list/product-row/product-row.component';
 import { ProductDetailComponent } from './../product-detail/product-detail.component';
@@ -19,6 +20,7 @@ import { HomeComponent } from './home.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    HomeRoutingModule,
     RouterModule
   ]
 })

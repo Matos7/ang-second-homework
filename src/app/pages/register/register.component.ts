@@ -1,14 +1,14 @@
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 import { User } from './../../core/models/users';
-import { UsersService } from './../../core/services/users.service';
 import { Component, OnInit } from '@angular/core';
+import { UsersService } from './../../core/services/users.service';
 import {
   FormGroup,
   FormBuilder,
   FormControl,
   Validators
 } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',

@@ -1,13 +1,13 @@
-import { DataService } from '../../core/services/data.service';
-import { Product } from '../../core/models/product';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Product } from '../../core/models/product';
+import { DataService } from '../../core/services/data.service';
 import {
   FormGroup,
   FormBuilder,
   FormControl,
   Validators
 } from '@angular/forms';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-list',

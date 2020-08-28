@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 import { User } from './../../core/models/users';
-import { UsersService } from './../../core/services/users.service';
 import { Component, OnInit } from '@angular/core';
+import { UsersService } from './../../core/services/users.service';
 import {
   FormGroup,
   FormBuilder,

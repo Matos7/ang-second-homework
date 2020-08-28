@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -9,11 +9,11 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private _router: Router,private router: Router) {
+  constructor(private _router: Router) {
   }
 
   public isLinkDisabled():boolean{
-    const pathName = this.router.url;
+    const pathName = this._router.url;
     if(pathName === "/login" || pathName === "/register" || pathName === "//forget-password" ){
       return true;
     }
