@@ -1,3 +1,5 @@
+import { ItemStatComponent } from './pages/item-stat/item-stat.component';
+import { ItemReviewComponent } from './pages/item-review/item-review.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -11,26 +13,30 @@ import { LoginComponent } from './pages/login/login.component';
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 
+const itemRoutes: Routes = [
+  { path: 'review', component: ItemReviewComponent },
+  { path: 'stat', component: ItemStatComponent },
+];
+
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'product-detail/:id', component: ProductDetailComponent },
+  {
+    path: 'product-detail/:id',
+    component: ProductDetailComponent,
+    children: itemRoutes,
+  },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forget-password', component: ForgetPasswordComponent },
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
-  { path: '**', component: NotFoundComponent }
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    RouterModule.forRoot(appRoutes)
-  ],
-  exports : [
-    RouterModule
-  ]
+  imports: [CommonModule, RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
