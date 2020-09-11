@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
+import _ from 'lodash';
 import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { Product } from '../../core/models/product';
 import { DataService } from '../../core/services/data.service';
 import {
   FormGroup,
   FormBuilder,
   FormControl,
-  Validators
+  Validators,
 } from '@angular/forms';
 
 @Component({
   selector: 'app-products-list',
   templateUrl: './products-list.component.html',
-  styleUrls: ['./products-list.component.scss']
+  styleUrls: ['./products-list.component.scss'],
 })
 export class ProductsListComponent {
   public products: Product[] = [];
@@ -49,10 +50,10 @@ export class ProductsListComponent {
     setTimeout(this.getProducts.bind(this), 200);
     this.createValidationForAdding();
     this.categoryForm = new FormGroup({
-      findCategory: new FormControl()
+      findCategory: new FormControl(),
     });
     this.priceForm = new FormGroup({
-      priceRange: new FormControl()
+      priceRange: new FormControl(),
     });
   }
 
@@ -63,7 +64,7 @@ export class ProductsListComponent {
     this._router.navigateByUrl(`/home?category=${selectedValue}`);
 
     this.products = this.cachedProducts.filter(
-      item => item.category === selectedValue
+      (item) => item.category === selectedValue
     );
   }
 
@@ -76,7 +77,7 @@ export class ProductsListComponent {
     this._router.navigateByUrl(`/home?price=${selectedValue}`);
 
     this.products = this.cachedProducts
-      .filter(item => item.price <= selectedValue)
+      .filter((item) => item.price <= selectedValue)
       .sort((a: Product, b: Product) => b.price - a.price);
   }
 
@@ -86,23 +87,23 @@ export class ProductsListComponent {
       addDesc: new FormControl('', [
         Validators.required,
         Validators.minLength(10),
-        Validators.maxLength(150)
+        Validators.maxLength(150),
       ]),
       addPrice: new FormControl('', [
         Validators.required,
-        Validators.pattern('^[0-9]*$')
+        Validators.pattern('^[0-9]*$'),
       ]),
       addCategory: new FormControl('', [Validators.required]),
-      addImgUrl: new FormControl('', [Validators.required])
+      addImgUrl: new FormControl('', [Validators.required]),
     });
   }
 
   public getProducts(): void {
     this.dataService.getproductsFromDB().subscribe(
-      res => {
+      (res) => {
         this.products = this.cachedProducts = res.data;
       },
-      err => {
+      (err) => {
         throw err;
       }
     );
@@ -127,13 +128,13 @@ export class ProductsListComponent {
         Validators.required,
         ,
         Validators.minLength(10),
-        Validators.maxLength(150)
+        Validators.maxLength(150),
       ]),
       editPrice: new FormControl(product.price, [
         Validators.required,
-        Validators.pattern('^[0-9]*$')
+        Validators.pattern('^[0-9]*$'),
       ]),
-      editImgUrl: new FormControl(product.imageUrl, [Validators.required])
+      editImgUrl: new FormControl(product.imageUrl, [Validators.required]),
     });
 
     this.editingProduct = product;
@@ -143,11 +144,18 @@ export class ProductsListComponent {
     this.searchText = '';
     this.sortValue = '';
     const removingId = product.id;
-    this.products = this.cachedProducts.filter(item => removingId !== item.id);
-    this.cachedProducts = this.products;
+
     if (this.editingProduct === product) {
       this.editingProduct = {};
     }
+
+    this.products = _.remove(this.products, function(item) {
+      return item.id !== removingId;
+    });
+    
+    this.cachedProducts = _.remove(this.cachedProducts, function(item) {
+      return item.id !== removingId;
+    });
   }
 
   public sortProducts(selectedValue: string): void {
@@ -204,7 +212,7 @@ export class ProductsListComponent {
     const modifiedVal: string = searchValue.trim().toLocaleLowerCase();
 
     setTimeout(() => {
-      this.products = this.cachedProducts.filter(product =>
+      this.products = this.cachedProducts.filter((product) =>
         product.title.toLocaleLowerCase().includes(modifiedVal)
       );
 
@@ -224,7 +232,7 @@ export class ProductsListComponent {
     let imgUrl: string = formGroup.editImgUrl.value;
 
     setTimeout(() => {
-      const index = this.products.findIndex(item => item.id === id);
+      const index = this.products.findIndex((item) => item.id === id);
       const product = this.products[index];
 
       product.title = title;
@@ -261,7 +269,7 @@ export class ProductsListComponent {
         description: description,
         category: category,
         price: price,
-        imageUrl: imgUrl
+        imageUrl: imgUrl,
       };
 
       this.products.push(newProduct);

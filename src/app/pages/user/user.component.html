@@ -1,0 +1,24 @@
+<link
+  href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+  rel="stylesheet"
+/>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3 col-sm-6">
+      <div class="card hovercard">
+        <div class="cardheader"></div>
+        <div class="avatar">
+          <img alt="" src="http://lorempixel.com/100/100/people/{{user.id}}/" />
+        </div>
+        <div class="info">
+          <div class="title">
+            <b>{{user.name}} {{user.surname}}</b>
+          </div>
+          <div class="desc">Email: <input type="text" [value]="user.email"></div>
+          <div class="desc">City: {{user.city}}</div>
+          <div class="desc">Phone: {{user.phone}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

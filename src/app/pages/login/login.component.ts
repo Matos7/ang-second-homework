@@ -49,6 +49,7 @@ export class LoginComponent implements OnInit {
     },(err)=>{
       console.log(err);
     })
+    localStorage.removeItem('user');
   }
 
   public login(): void {
@@ -69,6 +70,7 @@ export class LoginComponent implements OnInit {
     } else {
       if (item.password === password) {
         this._router.navigateByUrl('/home');
+        localStorage.setItem('user', JSON.stringify(item));
       } else {
         this.wrongPassword = true;
         setTimeout(() => {
