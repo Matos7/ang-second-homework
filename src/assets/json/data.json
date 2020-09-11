@@ -91,9 +91,9 @@
   ],
   "users": [
     {
-      "id": 1,
-      "name": "test name",
-      "surname": "test surname",
+      "id": 9,
+      "name": "Natasha",
+      "surname": "Karalyova",
       "email": "test@mail.ru",
       "password": "test1234",
       "city": "Gyumri",

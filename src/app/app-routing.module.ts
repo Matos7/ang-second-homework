@@ -42,6 +42,11 @@ const appRoutes: Routes = [
       import('./pages/contact/contact.module').then((m) => m.ContactModule),
   },
   {
+    path: 'user',
+    loadChildren: () =>
+      import('./pages/user/user.module').then((m) => m.UserModule),
+  },
+  {
     path: '**',
     loadChildren: () =>
       import('./pages/not-found/not-found.module').then(
