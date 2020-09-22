@@ -39,6 +39,6 @@ export class UserComponent implements OnInit {
   }
 
   toggleComponent(): void {
-    this.showUpdateComponent === true ? this.showUpdateComponent = false : this.showUpdateComponent = true;
+    this.showUpdateComponent = !this.showUpdateComponent;
   }
 }
